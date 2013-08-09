@@ -80,17 +80,18 @@
 				return iframe.contentWindow ? true : false;
 			}
 
-			//We have to call trigger twice, as we can not be sure if all 
-			//iframes have completed loading when this code runs.
 			function init(){
 				iframe.style.overflow = 'hidden';
 				iframe.scrolling = 'no';
 
-				$(iframe).on('load',function(){
-					trigger(iframe);
-				});
-				trigger(iframe);
+				setTimeout(function () { fixIframeInit(iframe); }, 250);
 			}
+			
+			function fixIframeInit(iframe)
+	                {
+	                        trigger(iframe);
+	                        setTimeout(function () { fixIframeInit(iframe); }, 250);
+	                }
 
 			function trigger(){
 
